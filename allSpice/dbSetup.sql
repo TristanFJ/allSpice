@@ -25,3 +25,11 @@ CREATE TABLE IF NOT EXISTS ingredients(
   FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';
 
+CREATE TABLE IF NOT EXISTS steps(
+  id int NOT NULL primary key AUTO_INCREMENT,
+  step INT NOT NULL,
+  body TEXT NOT NULL,
+  recipeId INT NOT NULL,
+  FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
+)default charset utf8 COMMENT '';
+

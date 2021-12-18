@@ -43,6 +43,9 @@ namespace allSpice
       services.AddTransient<IngredientsRepository>();
       services.AddTransient<IngredientsService>();
 
+      services.AddTransient<StepsRepository>();
+      services.AddTransient<StepsService>();
+
     }
 
     private void ConfigureCors(IServiceCollection services)
@@ -110,7 +113,7 @@ namespace allSpice
       {
         endpoints.MapControllers();
       });
-      Console.Beep(500, 250);
+      Console.Beep(1000, 250);
     }
   }
 }

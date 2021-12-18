@@ -11,12 +11,12 @@ namespace allSpice.Controllers
   public class IngredientsController : ControllerBase
   {
     private readonly IngredientsService _ins;
-    private readonly RecipesService _rs;
 
-    public IngredientsController(IngredientsService ins, RecipesService rs)
+    // removing RecipeService because I think I only need that "dual service" for the many-to-many
+
+    public IngredientsController(IngredientsService ins)
     {
       _ins = ins;
-      _rs = rs;
     }
 
     // NOTE I don't know if I need to "Get all ingredients", or if I only need to get ingredients by recipeId. I probably want a GetAll for the main page? So that I can just get them all and display them according to each recipe component? 
