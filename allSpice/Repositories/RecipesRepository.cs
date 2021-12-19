@@ -3,6 +3,7 @@ using System.Data;
 using Dapper;
 using allSpice.Models;
 using System.Linq;
+using System;
 
 namespace allSpice.Repositories
 {
@@ -42,6 +43,24 @@ namespace allSpice.Repositories
       int id = _db.ExecuteScalar<int>(sql, newRecipe);
       newRecipe.Id = id;
       return newRecipe;
+    }
+
+    internal Recipe Update(Recipe updatedRecipe)
+    {
+      string sql = @"
+      UPDATE recipes
+      SET
+      title = @Title,
+      subtitle = @Subtitle,
+      category = @Category
+      WHERE id = @Id;
+      ";
+      int rows = _db.Execute(sql, updatedRecipe);
+      if (rows <= 0)
+      {
+        throw new Exception("Update failed.");
+      }
+      return updatedRecipe;
     }
 
     internal void Remove(int id)

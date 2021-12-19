@@ -64,6 +64,24 @@ namespace allSpice.Controllers
       }
     }
 
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public ActionResult<Recipe> Create([FromBody] Recipe updatedRecipe, int id)
+    {
+      try
+      {
+        updatedRecipe.Id = id;
+        Recipe recipe = _rs.Update(updatedRecipe);
+        return Ok(recipe);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
     [HttpDelete("{id}")]
     [Authorize]
     public async Task<ActionResult<Recipe>> Remove(int id)
