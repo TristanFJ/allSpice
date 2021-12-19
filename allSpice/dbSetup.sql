@@ -32,4 +32,3 @@ CREATE TABLE IF NOT EXISTS steps(
   recipeId INT NOT NULL,
   FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';
-
