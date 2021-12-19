@@ -35,5 +35,15 @@ namespace allSpice.Services
     {
       return _repo.Create(newRecipe);
     }
+
+    internal void Remove(int id, string userId)
+    {
+      Recipe recipe = Get(id);
+      if (recipe.CreatorId != userId)
+      {
+        throw new Exception("access denied");
+      }
+      _repo.Remove(id);
+    }
   }
 }
