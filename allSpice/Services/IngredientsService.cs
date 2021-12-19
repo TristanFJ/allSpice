@@ -36,5 +36,15 @@ namespace allSpice.Services
     }
 
 
+    internal Ingredient Update(Ingredient updatedIngredient)
+    {
+      Ingredient oldIngredient = Get(updatedIngredient.Id);
+      updatedIngredient.Name = updatedIngredient.Name != null ? updatedIngredient.Name : oldIngredient.Name;
+      updatedIngredient.Quantity = updatedIngredient.Quantity != null ? updatedIngredient.Quantity : oldIngredient.Quantity;
+      updatedIngredient.RecipeId = updatedIngredient.RecipeId != 0 ? updatedIngredient.RecipeId : oldIngredient.RecipeId;
+      return _repo.Update(updatedIngredient);
+    }
+
+
   }
 }

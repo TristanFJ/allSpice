@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -39,6 +40,26 @@ namespace allSpice.Repositories
       newIngredient.Id = id;
       return newIngredient;
     }
+
+
+    internal Ingredient Update(Ingredient updatedIngredient)
+    {
+      string sql = @"
+      UPDATE ingredients
+      SET
+      name = @Name,
+      quantity = @Quantity,
+      recipeId = @RecipeId
+      WHERE id = @Id;
+      ";
+      int rows = _db.Execute(sql, updatedIngredient);
+      if (rows <= 0)
+      {
+        throw new Exception("Update failed.");
+      }
+      return updatedIngredient;
+    }
+
 
 
   }

@@ -70,5 +70,23 @@ namespace allSpice.Controllers
       }
     }
 
+
+    [HttpPut("{id}")]
+    [Authorize]
+    public ActionResult<Ingredient> Create([FromBody] Ingredient updatedIngredient, int id)
+    {
+      try
+      {
+        updatedIngredient.Id = id;
+        Ingredient ingredient = _ins.Update(updatedIngredient);
+        return Ok(ingredient);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
   }
 }
