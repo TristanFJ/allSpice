@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using allSpice.Models;
 using allSpice.Services;
+using CodeWorks.Auth0Provider;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace allSpice.Controllers
@@ -34,5 +37,38 @@ namespace allSpice.Controllers
         return BadRequest(e.Message);
       }
     }
+
+
+    [HttpGet("{id}")]
+    public ActionResult<Ingredient> Get(int id)
+    {
+      try
+      {
+        var ingredient = _ins.Get(id);
+        return Ok(ingredient);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
+    [HttpPost]
+    [Authorize]
+    public async Task<ActionResult<Ingredient>> Create([FromBody] Ingredient newIngredient)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        Ingredient ingredient = _ins.Create(newIngredient);
+        return Ok(ingredient);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
   }
 }
