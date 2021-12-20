@@ -31,9 +31,9 @@ namespace allSpice.Repositories
     {
       string sql = @"
       INSERT INTO ingredients
-      (name, quantity, recipeId)
+      (name, quantity, recipeId, creatorId)
       VALUES
-      (@Name, @Quantity, @RecipeId);
+      (@Name, @Quantity, @RecipeId, @CreatorId);
       SELECT LAST_INSERT_ID()
       ";
       int id = _db.ExecuteScalar<int>(sql, newIngredient);
@@ -60,6 +60,11 @@ namespace allSpice.Repositories
       return updatedIngredient;
     }
 
+    internal void Remove(int id)
+    {
+      string sql = "DELETE FROM ingredients WHERE id = @id LIMIT 1";
+      _db.Execute(sql, new { id });
+    }
 
 
   }

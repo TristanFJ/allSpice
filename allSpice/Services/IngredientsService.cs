@@ -42,9 +42,19 @@ namespace allSpice.Services
       updatedIngredient.Name = updatedIngredient.Name != null ? updatedIngredient.Name : oldIngredient.Name;
       updatedIngredient.Quantity = updatedIngredient.Quantity != null ? updatedIngredient.Quantity : oldIngredient.Quantity;
       updatedIngredient.RecipeId = updatedIngredient.RecipeId != 0 ? updatedIngredient.RecipeId : oldIngredient.RecipeId;
+      updatedIngredient.CreatorId = updatedIngredient.CreatorId != null ? updatedIngredient.CreatorId : oldIngredient.CreatorId;
       return _repo.Update(updatedIngredient);
     }
 
+    internal void Remove(int id, string userId)
+    {
+      Ingredient ingredient = Get(id);
+      if (ingredient.CreatorId != userId)
+      {
+        throw new Exception("access denied");
+      }
+      _repo.Remove(id);
+    }
 
   }
 }
