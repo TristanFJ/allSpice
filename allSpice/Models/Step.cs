@@ -8,6 +8,7 @@ namespace allSpice.Models
     public int Sequence { get; set; }
     public string? Body { get; set; }
     public int RecipeId { get; set; }
+    public string? CreatorId { get; set; }
 
   }
 }

@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Collections.Generic;
 using allSpice.Models;
 using allSpice.Repositories;
@@ -19,5 +20,41 @@ namespace allSpice.Services
     {
       return _repo.Get();
     }
+
+    internal Step Get(int id)
+    {
+      Step found = _repo.Get(id);
+      if (found == null)
+      {
+        throw new Exception("Invalid Id");
+      }
+      return found;
+    }
+
+    internal Step Create(Step newStep)
+    {
+      return _repo.Create(newStep);
+    }
+
+    internal Step Update(Step updatedStep)
+    {
+      Step oldStep = Get(updatedStep.Id);
+      updatedStep.Body = updatedStep.Body != null ? updatedStep.Body : oldStep.Body;
+      updatedStep.Sequence = updatedStep.Sequence != 0 ? updatedStep.Sequence : oldStep.Sequence;
+      updatedStep.RecipeId = updatedStep.RecipeId != 0 ? updatedStep.RecipeId : oldStep.RecipeId;
+      updatedStep.CreatorId = updatedStep.CreatorId != null ? updatedStep.CreatorId : oldStep.CreatorId;
+      return _repo.Update(updatedStep);
+    }
+
+    internal void Remove(int id, string userId)
+    {
+      Step step = Get(id);
+      if (step.CreatorId != userId)
+      {
+        throw new Exception("access denied");
+      }
+      _repo.Remove(id);
+    }
+
   }
 }
