@@ -27,6 +27,11 @@ namespace allSpice.Repositories
       string sql = "SELECT * FROM steps WHERE id = @id;";
       return _db.QueryFirstOrDefault<Step>(sql, new { id });
     }
+    internal List<Step> GetByRecipe(int id)
+    {
+      string sql = "SELECT * FROM steps WHERE recipeId = @id;";
+      return _db.Query<Step>(sql, new { id }).ToList();
+    }
 
     internal Step Create(Step newStep)
     {

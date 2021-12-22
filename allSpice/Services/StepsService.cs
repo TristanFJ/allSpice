@@ -30,6 +30,10 @@ namespace allSpice.Services
       }
       return found;
     }
+    internal List<Step> GetByRecipe(int id)
+    {
+      return _repo.GetByRecipe(id);
+    }
 
     internal Step Create(Step newStep)
     {

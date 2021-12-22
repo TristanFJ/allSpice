@@ -40,12 +40,12 @@ namespace allSpice.Controllers
 
 
     [HttpGet("{id}")]
-    public ActionResult<Ingredient> Get(int id)
+    public ActionResult<IEnumerable<Ingredient>> GetByRecipe(int id)
     {
       try
       {
-        var ingredient = _ins.Get(id);
-        return Ok(ingredient);
+        var ingredients = _ins.GetByRecipe(id);
+        return Ok(ingredients);
       }
       catch (Exception e)
       {
@@ -74,12 +74,13 @@ namespace allSpice.Controllers
 
     [HttpPut("{id}")]
     [Authorize]
-    public ActionResult<Ingredient> Create([FromBody] Ingredient updatedIngredient, int id)
+    public async Task<ActionResult<Ingredient>> CreateAsync([FromBody] Ingredient updatedIngredient, int id)
     {
       try
       {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         updatedIngredient.Id = id;
-        Ingredient ingredient = _ins.Update(updatedIngredient);
+        Ingredient ingredient = _ins.Update(updatedIngredient, userInfo.Id);
         return Ok(ingredient);
       }
       catch (Exception e)

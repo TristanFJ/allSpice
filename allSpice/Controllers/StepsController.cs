@@ -35,12 +35,12 @@ namespace allSpice.Controllers
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Step> Get(int id)
+    public ActionResult<IEnumerable<Step>> GetByRecipe(int id)
     {
       try
       {
-        var step = _sts.Get(id);
-        return Ok(step);
+        var steps = _sts.GetByRecipe(id);
+        return Ok(steps);
       }
       catch (Exception e)
       {
