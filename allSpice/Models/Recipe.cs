@@ -8,4 +8,10 @@ namespace allSpice.Models
     public string? Category { get; set; }
     public string? CreatorId { get; set; }
   }
+
+  public class FavoriteViewModel : Recipe
+  {
+    public int FavoriteId { get; set; }
+  }
+
 }

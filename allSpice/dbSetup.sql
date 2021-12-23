@@ -36,3 +36,17 @@ CREATE TABLE IF NOT EXISTS steps(
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE,
   FOREIGN KEY (recipeId) REFERENCES recipes(id) ON DELETE CASCADE
 )default charset utf8 COMMENT '';
+
+
+CREATE TABLE favorites(
+  favoriteId int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  creatorId VARCHAR(255) NOT NULL,
+  id INT NOT NULL,
+  FOREIGN KEY (creatorId)
+    REFERENCES accounts(id)
+    ON DELETE CASCADE, 
+
+  FOREIGN KEY (id)
+    REFERENCES recipes(id)
+    ON DELETE CASCADE
+)DEFAULT CHARSET UTF8 COMMENT '';
