@@ -1,13 +1,13 @@
-$body-bg: #e5e5e5;
-$primary: #3ba5dc;
-$secondary: #8392ab;
-$success: #00f867;
-$info: #5d0149;
-$warning: #fbcf33;
-$danger: #ea0606;
-$light: #e9ecef;
-$dark: #111927;
-$grey: #cbcbcb;
+$body-bg: hsl(0, 0%, 75%);
+$primary: hsl(44.71, 100%, 50%);
+$secondary: hsl(45.76, 43.7%, 73.53%);
+$success: hsl(145, 100%, 49%);
+$info: hsl(313, 98%, 18%);
+$warning: hsl(47, 96%, 59%);
+$danger: hsl(0, 95%, 47%);
+$light: hsl(204, 8.2%, 96.08%);
+$dark: hsl(150, 2.33%, 16.86%);
+$grey: hsl(174, 8.33%, 23.53%);
 
 $font-sans-serif: Open Sans;
 $font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
