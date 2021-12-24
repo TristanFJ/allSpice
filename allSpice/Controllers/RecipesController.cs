@@ -33,6 +33,22 @@ namespace allSpice.Controllers
       }
     }
 
+    [HttpGet("mine")]
+    public async Task<ActionResult<IEnumerable<Recipe>>> GetMyRecipes(string id)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        id = userInfo.Id;
+        List<Recipe> recipes = _rs.GetMyRecipes(id);
+        return Ok(recipes);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpGet("{id}")]
     public ActionResult<Recipe> Get(int id)
     {

@@ -21,6 +21,11 @@ namespace allSpice.Services
       return _repo.GetAll();
     }
 
+    internal List<Recipe> GetMyRecipes(string id)
+    {
+      return _repo.GetMyRecipes(id);
+    }
+
     internal Recipe Get(int id)
     {
       Recipe found = _repo.Get(id);

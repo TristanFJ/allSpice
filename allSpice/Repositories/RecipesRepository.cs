@@ -28,6 +28,12 @@ namespace allSpice.Repositories
       return _db.QueryFirstOrDefault<Recipe>(sql, new { id });
     }
 
+    internal List<Recipe> GetMyRecipes(string id)
+    {
+      string sql = "SELECT * FROM recipes WHERE creatorId = @id";
+      return _db.Query<Recipe>(sql, new { id }).ToList();
+    }
+
     internal Recipe Create(Recipe newRecipe)
     {
       string sql = @"
@@ -69,3 +75,6 @@ namespace allSpice.Repositories
 
   }
 }
+
+// TODO add imgUrl to recipes
+// TODO add "getMyRecipes" route
