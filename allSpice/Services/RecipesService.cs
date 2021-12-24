@@ -49,6 +49,7 @@ namespace allSpice.Services
       updatedRecipe.Subtitle = updatedRecipe.Subtitle != null ? updatedRecipe.Subtitle : oldRecipe.Subtitle;
       updatedRecipe.Category = updatedRecipe.Category != null ? updatedRecipe.Category : oldRecipe.Category;
       updatedRecipe.CreatorId = updatedRecipe.CreatorId != null ? updatedRecipe.CreatorId : oldRecipe.CreatorId;
+      updatedRecipe.ImgUrl = updatedRecipe.ImgUrl != null ? updatedRecipe.ImgUrl : oldRecipe.ImgUrl;
       return _repo.Update(updatedRecipe);
     }
 
