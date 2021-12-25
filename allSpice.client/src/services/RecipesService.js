@@ -19,6 +19,13 @@ class RecipesService {
     AppState.recipes = res.data
     // logger.log(AppState.recipes)
   }
+
+  async unfavorite(id) {
+    const res = await api.delete('account/favorites/' + id)
+    AppState.recipes = AppState.recipes.filter(r => r.id !== id)
+    // logger.log(res.data)
+    // logger.log(AppState.recipes)
+  }
 }
 
 export const recipesService = new RecipesService();
