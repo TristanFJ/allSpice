@@ -1,7 +1,7 @@
 <template>
   <div class="filter">
     <div class="row">
-      <div class="col-3">
+      <div class="col-3 p-0">
         <button
           type="button"
           class="btn btn-light m-1 elevation-2"
@@ -10,7 +10,7 @@
           <b>Home</b>
         </button>
       </div>
-      <div class="col-6">
+      <div class="col-6 p-0">
         <button
           type="button"
           class="btn btn-light m-1 elevation-2"
@@ -19,7 +19,7 @@
           <b>My Recipes</b>
         </button>
       </div>
-      <div class="col-3">
+      <div class="col-3 p-0">
         <button
           type="button"
           class="btn btn-light m-1 elevation-2"

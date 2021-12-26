@@ -91,8 +91,5 @@ namespace allSpice.Repositories
       string sql = "DELETE FROM favorites WHERE id = @id";
       _db.Execute(sql, new { id });
     }
-
-    // TODO limit server to create only one favorite per recipe 
-
   }
 }

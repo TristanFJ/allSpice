@@ -20,6 +20,13 @@ class RecipesService {
     // logger.log(AppState.recipes)
   }
 
+  async favorite(id) {
+    const res = await api.post('account/favorites', { "id": id })
+    AppState.recipes = AppState.recipes.filter(r => r.id !== id)
+    // NOTE Hacky workaround to remove the favorited recipe from Home, until they refresh page. Moving on to other important things. 
+    // logger.log(res.data)
+  }
+
   async unfavorite(id) {
     const res = await api.delete('account/favorites/' + id)
     AppState.recipes = AppState.recipes.filter(r => r.id !== id)

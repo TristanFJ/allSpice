@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col text-center py-3 justify-content-around d-flex">
+      <div class="col-12 text-center py-3 justify-content-around d-flex">
         <Filter />
       </div>
     </div>
@@ -9,7 +9,7 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-4" v-for="r in recipes" :key="r.id">
+      <div class="col-lg-4" v-for="r in recipes" :key="r.id">
         <Recipe :recipe="r" />
       </div>
     </div>

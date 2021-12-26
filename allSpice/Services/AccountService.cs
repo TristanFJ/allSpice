@@ -55,7 +55,12 @@ namespace allSpice.Services
 
     internal FavoriteViewModel Create(FavoriteViewModel newFavorite)
     {
-      return _repo.Create(newFavorite);
+      FavoriteViewModel favorite = _repo.GetFavoriteById(newFavorite.Id);
+      if (favorite == null)
+      {
+        return _repo.Create(newFavorite);
+      }
+      throw new System.Exception("Favorite already exists");
     }
 
 
