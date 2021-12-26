@@ -1,19 +1,4 @@
 <template>
-  <!-- <div
-    class="recipe card elevation-3 m-2 p-3 selectable text-light"
-    :style="{ backgroundImage: 'url(' + recipe.imgUrl + ')' }"
-  >
-    <div class="row">
-      <div class="col-md-8">
-        <h3>{{ recipe.title }}</h3>
-        <p>{{ recipe.subtitle }}</p>
-      </div>
-      <div class="col text-end">
-        <p>{{ recipe.category }}</p>
-      </div>
-    </div>
-  </div> -->
-
   <div class="card mb-3 recipe elevation-3 m-2 p-3">
     <div class="row g-0">
       <div class="col-4">
@@ -24,8 +9,15 @@
         />
       </div>
       <div class="col-8">
-        <div class="card-body m-2 p-3 selectable rounded">
-          <h4 class="card-title">{{ recipe.title }}</h4>
+        <div
+          class="card-body m-2 p-3 selectable rounded"
+          data-bs-toggle="modal"
+          :data-bs-target="`#recipeModal-${recipe.id}`"
+          @click="getIngredientsById(recipe.id)"
+        >
+          <h4 class="card-title" style="text-decoration: underline">
+            {{ recipe.title }}
+          </h4>
           <p class="card-text">
             {{ recipe.subtitle }}
           </p>
@@ -36,7 +28,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 text-end p-0">
+      <div class="col-12 text-end p-0 py-2" v-if="!recipe.favoriteId">
         <button
           type="button"
           class="btn btn-primary btn-sm rounded-pill elevation-2"
@@ -45,21 +37,59 @@
           Favorite
         </button>
       </div>
+      <div class="col-12 text-end p-0 py-2" v-else>
+        <button
+          type="button"
+          class="btn btn-secondary btn-sm rounded-pill elevation-2"
+          @click="unfavorite(recipe.id)"
+        >
+          Unfavorite
+        </button>
+      </div>
     </div>
   </div>
+  <RecipeModal :id="'recipeModal-' + recipe.id" :recipe="recipe" />
 </template>
 
+// TODO figure out a way to tell if it's already favorited on the front end 
+// not sure if this stuff is MVP. Might want to focus on other things like Modal and ingredients etc
+// I could create a new bool property called favorited, but then you'd be manipulating the actual recipe object and I don't think that would be many to many.
 
 <script>
+import { ingredientsService } from "../services/IngredientsService"
+import { recipesService } from "../services/RecipesService"
 import { logger } from "../utils/Logger"
+import Pop from "../utils/Pop"
 export default {
   props: { recipe: { type: Object } },
   setup() {
     return {
+      async getIngredientsById(id) {
+        try {
+          await ingredientsService.getById(id)
+        } catch (error) {
+          logger.log(error)
+        }
+      },
 
+      async favorite(id) {
+        try {
+          await recipesService.favorite(id)
+          Pop.toast("Favorited!", 'success')
+        } catch (error) {
+          logger.log(error)
+        }
+        // logger.log(id)
+      },
 
-      favorite(id) {
-        logger.log(id)
+      async unfavorite(id) {
+        try {
+          await recipesService.unfavorite(id)
+          Pop.toast("Unfavorited!", 'success')
+        } catch (error) {
+          logger.log(error)
+        }
+        // logger.log(id)
       }
     }
   }
