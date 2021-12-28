@@ -54,7 +54,7 @@
                 </ul>
                 <div
                   class="row bottom m-auto"
-                  v-if="recipe.creatorId === account.userId"
+                  v-if="recipe.creatorId === account.id"
                 >
                   <div class="col-12">
                     <form @submit.prevent="addStep(recipe.id)">
