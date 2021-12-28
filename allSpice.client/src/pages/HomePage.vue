@@ -7,9 +7,9 @@
     </div>
   </div>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
-      <div class="col-lg-4" v-for="r in recipes" :key="r.id">
+      <div class="col-lg-6" v-for="r in recipes" :key="r.id">
         <Recipe :recipe="r" />
       </div>
     </div>

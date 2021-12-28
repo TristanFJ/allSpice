@@ -16,15 +16,15 @@
       <span class="navbar-toggler-icon" />
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
-        <!-- <li>
-          <router-link
-            :to="{ name: 'About' }"
-            class="btn text-success lighten-30 selectable text-uppercase"
-          >
-            About
-          </router-link>
-        </li> -->
+      <ul class="navbar-nav m-auto">
+        <button
+          type="button"
+          class="btn btn-primary rounded-pill btn-lg elevation-3"
+          data-bs-toggle="modal"
+          data-bs-target="#createModal"
+        >
+          Share Your Recipe
+        </button>
       </ul>
       <span class="navbar-text">
         <button
@@ -82,6 +82,7 @@
       </span>
     </div>
   </nav>
+  <CreateModal />
 </template>
 
 <script>

@@ -40,3 +40,8 @@ form:invalid button[type="submit"] {
 .card{
   background-color: $light;
 }
+
+.opacity {
+  backdrop-filter: blur(5px);
+}
+

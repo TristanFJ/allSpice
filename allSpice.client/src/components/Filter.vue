@@ -1,5 +1,5 @@
 <template>
-  <div class="filter">
+  <div class="filter" v-if="account.id">
     <div class="row">
       <div class="col-3 p-0">
         <button
@@ -34,11 +34,16 @@
 
 
 <script>
+import { computed } from "@vue/reactivity"
 import { recipesService } from "../services/RecipesService"
 import { logger } from "../utils/Logger"
+import { AppState } from "../AppState"
 export default {
   setup() {
     return {
+      account: computed(() => AppState.account),
+
+
       async allRecipes() {
         try {
           // logger.log("Home")

@@ -3,6 +3,13 @@ import { logger } from "../utils/Logger";
 import { api } from "./AxiosService";
 
 class RecipesService {
+
+  async createRecipe(recipe) {
+    const res = await api.post('api/recipes', recipe)
+    logger.log(res.data)
+    AppState.recipes.unshift(res.data)
+  }
+
   async getAll() {
     const res = await api.get('api/recipes')
     AppState.recipes = res.data
@@ -13,6 +20,8 @@ class RecipesService {
     AppState.recipes = res.data
     // logger.log(AppState.recipes)
   }
+
+  // NOTE to hide the favorite recipes button on favorites, you could maybe getMyFavorites on homePage after getMyRecipes, and then splice in the favorites in place where ever the recipeId matches the favoriteId?
 
   async getMyRecipes() {
     const res = await api.get('api/recipes/mine')
