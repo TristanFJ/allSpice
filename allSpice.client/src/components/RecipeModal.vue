@@ -20,6 +20,14 @@
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
       <div class="modal-content modal-xl">
         <div class="modal-header">
+          <i
+            @click="deleteRecipe(recipe.id)"
+            class="mdi mdi-trash-can text-danger rounded selectable me-3"
+            title="delete"
+            v-if="recipe.creatorId === account.id"
+            data-bs-dismiss="modal"
+          ></i>
+
           <h5 class="modal-title">{{ recipe.title }}</h5>
           <h6 class="modal-title ms-2 p-2 bg-secondary rounded-pill">
             {{ recipe.category }}
@@ -43,10 +51,22 @@
                   class="rounded elevation-2 my-1"
                 />
               </div>
-              <div class="col-lg-4 bg-secondary rounded elevation-2 my-1">
+              <div class="col-lg-3 bg-secondary rounded elevation-2 my-1">
                 <h5 class="m-2 p-2 rounded bg-grey elevation-2">Steps:</h5>
-                <ul>
+                <ul class="p-0">
                   <div v-for="step in steps" :key="step.id">
+                    <i
+                      @click="deleteStep(step.id)"
+                      class="
+                        mdi mdi-trash-can
+                        text-danger
+                        rounded
+                        selectable
+                        me-3
+                      "
+                      title="delete"
+                      v-if="recipe.creatorId === account.id"
+                    ></i>
                     <b>{{ step.sequence }}</b
                     >:
                     {{ step.body }}
@@ -56,17 +76,18 @@
                   class="row bottom m-auto"
                   v-if="recipe.creatorId === account.id"
                 >
-                  <div class="col-12">
+                  <div class="col-12 my-2">
                     <form @submit.prevent="addStep(recipe.id)">
                       <div class="input-group">
                         <input
                           type="number"
                           class="form-control"
-                          placeholder="Sequence"
+                          placeholder="Order"
                           required
                           aria-label="Step"
                           aria-describedby="Step"
-                          v-model="state.editable.sequence"
+                          min="1"
+                          v-model="state.step.sequence"
                         />
                         <input
                           type="text"
@@ -75,7 +96,7 @@
                           required
                           aria-label="Step"
                           aria-describedby="Step"
-                          v-model="state.editable.body"
+                          v-model="state.step.body"
                         />
                         <button
                           class="btn btn-primary"
@@ -89,37 +110,61 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-3 bg-secondary rounded elevation-2 my-1">
+              <div class="col-lg-4 bg-secondary rounded elevation-2 my-1">
                 <h5 class="m-2 p-2 rounded bg-grey elevation-2">
                   Ingredients:
                 </h5>
-                <ul>
-                  <li v-for="ingredient in ingredients" :key="ingredient.id">
-                    {{ ingredient.quantity }}, {{ ingredient.name }}
-                  </li>
-                </ul>
+                <div v-for="ingredient in ingredients" :key="ingredient.id">
+                  <i
+                    @click="deleteIngredient(ingredient.id)"
+                    class="
+                      mdi mdi-trash-can
+                      text-danger
+                      rounded
+                      selectable
+                      me-3
+                    "
+                    title="delete"
+                    v-if="recipe.creatorId === account.id"
+                  ></i>
+
+                  <b> {{ ingredient.quantity }}</b
+                  >, {{ ingredient.name }}
+                </div>
                 <div
                   class="row bottom m-auto"
                   v-if="recipe.creatorId === account.id"
                 >
-                  <div class="col-12">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Ingredient"
-                        required
-                        aria-label="Ingredient"
-                        aria-describedby="button-addon2"
-                      />
-                      <button
-                        class="btn btn-primary"
-                        type="submit"
-                        id="button-addon2"
-                      >
-                        +
-                      </button>
-                    </div>
+                  <div class="col-12 my-2">
+                    <form @submit.prevent="addIngredient(recipe.id)">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Quantity"
+                          required
+                          aria-label="Quantity"
+                          aria-describedby="Quantity"
+                          v-model="state.ingredient.quantity"
+                        />
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Name"
+                          required
+                          aria-label="Name"
+                          aria-describedby="Name"
+                          v-model="state.ingredient.name"
+                        />
+                        <button
+                          class="btn btn-primary"
+                          type="submit"
+                          id="button-addon2"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -160,12 +205,15 @@ import { recipesService } from "../services/RecipesService"
 import Pop from "../utils/Pop"
 import { logger } from "../utils/Logger"
 import { stepsService } from "../services/StepsService"
+import { ingredientsService } from "../services/IngredientsService"
+import { Modal } from "bootstrap"
 export default {
   props: { recipe: { type: Object } },
 
   setup() {
     const state = reactive({
-      editable: {},
+      step: {},
+      ingredient: {}
     })
     return {
       ingredients: computed(() => AppState.ingredients),
@@ -175,11 +223,45 @@ export default {
 
 
       async addStep(id) {
-        state.editable.recipeId = id
-        logger.log(state.editable)
+        state.step.recipeId = id
+        logger.log(state.step)
         try {
-          await stepsService.addStep(state.editable)
-          state.editable = {}
+          await stepsService.addStep(state.step)
+          state.step = {}
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
+      async deleteStep(id) {
+        try {
+          const yes = await Pop.confirm('Delete your step?')
+          if (!yes) { return }
+
+          await stepsService.deleteStep(id)
+          Pop.toast("Step deleted", 'success')
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
+      async addIngredient(id) {
+        try {
+          state.ingredient.recipeId = id
+          await ingredientsService.addIngredient(state.ingredient)
+          state.ingredient = {}
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
+      async deleteIngredient(id) {
+        try {
+          const yes = await Pop.confirm('Delete your ingredient?')
+          if (!yes) { return }
+
+          await ingredientsService.deleteIngredient(id)
+          Pop.toast("Ingredient deleted", 'success')
         } catch (error) {
           logger.error(error)
         }
@@ -203,6 +285,19 @@ export default {
           logger.error(error)
         }
         // logger.log(id)
+      },
+
+      async deleteRecipe(id) {
+        try {
+
+          const yes = await Pop.confirm('Delete your recipe?')
+          if (!yes) { return }
+          await recipesService.deleteRecipe(id)
+          Pop.toast("Recipe deleted", 'success')
+          return
+        } catch (error) {
+          logger.error(error)
+        }
       }
     }
   }

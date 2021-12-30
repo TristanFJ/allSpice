@@ -10,6 +10,12 @@ class RecipesService {
     AppState.recipes.unshift(res.data)
   }
 
+  async deleteRecipe(id) {
+    const res = await api.delete('api/recipes/' + id)
+    logger.log(res.data)
+    AppState.recipes = AppState.recipes.filter(r => r.id !== id)
+  }
+
   async getAll() {
     const res = await api.get('api/recipes')
     AppState.recipes = res.data

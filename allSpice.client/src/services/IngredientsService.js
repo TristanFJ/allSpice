@@ -10,6 +10,18 @@ class IngredientsService {
     // logger.log('res.data', res.data)
     // logger.log('appstate.ingredients', AppState.ingredients)
   }
+
+  async addIngredient(ingredient) {
+    const res = await api.post('api/ingredients', ingredient)
+    logger.log(res.data)
+    AppState.ingredients.push(res.data)
+  }
+
+  async deleteIngredient(id) {
+    const res = await api.delete('api/ingredients/' + id)
+    logger.log(res.data)
+    AppState.ingredients = AppState.ingredients.filter(i => i.id !== id)
+  }
 }
 
 export const ingredientsService = new IngredientsService();

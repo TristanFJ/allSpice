@@ -4,7 +4,7 @@
       <div class="col-4">
         <img
           :src="recipe.imgUrl"
-          class="img-fluid rounded-start elevation-2"
+          class="img-fluid rounded elevation-5"
           :alt="recipe.title"
         />
       </div>
