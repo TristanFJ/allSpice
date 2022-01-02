@@ -1,6 +1,11 @@
 <template>
   <div class="card mb-3 recipe elevation-3 m-2 p-3 my-4">
-    <div class="row g-0">
+    <div
+      class="row g-0 selectable rounded"
+      data-bs-toggle="modal"
+      :data-bs-target="`#recipeModal-${recipe.id}`"
+      @click="getById(recipe.id)"
+    >
       <div class="col-4">
         <img
           :src="recipe.imgUrl"
@@ -8,12 +13,7 @@
           :alt="recipe.title"
         />
       </div>
-      <div
-        class="col-8 selectable rounded"
-        data-bs-toggle="modal"
-        :data-bs-target="`#recipeModal-${recipe.id}`"
-        @click="getById(recipe.id)"
-      >
+      <div class="col-8">
         <div class="row ms-1">
           <div class="col-sm-9">
             <h4 class="card-title" style="text-decoration: underline">

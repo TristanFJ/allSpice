@@ -28,33 +28,31 @@
           <b>Favorites</b>
         </button>
       </div>
-      <div class="col-sm-3 p-0">
-        <div class="dropdown">
-          <button
-            class="btn btn-light m-1 elevation-2 dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            required
-          >
-            <b>{{ state }}</b>
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li v-for="category in categories" :key="category">
-              <div
-                class="dropdown-item selectable"
-                required
-                @click="
-                  state = category;
-                  getByCategory(state);
-                "
-              >
-                {{ category }}
-              </div>
-            </li>
-          </ul>
-        </div>
+      <div class="col-sm-3 p-0 dropdown">
+        <button
+          class="btn btn-light m-1 elevation-2"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          required
+        >
+          <b>{{ state }}</b>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li v-for="category in categories" :key="category">
+            <div
+              class="dropdown-item selectable"
+              required
+              @click="
+                state = category;
+                getByCategory(state);
+              "
+            >
+              {{ category }}
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
