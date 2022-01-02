@@ -17,6 +17,12 @@ class IngredientsService {
     AppState.ingredients.push(res.data)
   }
 
+  async updateIngredient(data, id) {
+    const res = await api.put('api/ingredients/' + id, data)
+    logger.log(res.data)
+
+  }
+
   async deleteIngredient(id) {
     const res = await api.delete('api/ingredients/' + id)
     logger.log(res.data)

@@ -67,9 +67,19 @@
                       title="delete"
                       v-if="recipe.creatorId === account.id"
                     ></i>
-                    <b>{{ step.sequence }}</b
+                    <b
+                      class="selectable rounded"
+                      contenteditable
+                      @blur="updateStepSequence(step.id)"
+                      >{{ step.sequence }}</b
                     >:
-                    {{ step.body }}
+                    <span
+                      class="selectable rounded"
+                      contenteditable
+                      @blur="updateStepBody(step.id)"
+                    >
+                      {{ step.body }}
+                    </span>
                   </div>
                 </ul>
                 <div
@@ -128,8 +138,20 @@
                     v-if="recipe.creatorId === account.id"
                   ></i>
 
-                  <b> {{ ingredient.quantity }}</b
-                  >, {{ ingredient.name }}
+                  <b
+                    class="selectable rounded"
+                    contenteditable
+                    @blur="updateIngredientQuantity(ingredient.id)"
+                  >
+                    {{ ingredient.quantity }}</b
+                  >,
+                  <span
+                    class="selectable rounded"
+                    contenteditable
+                    @blur="updateIngredientName(ingredient.id)"
+                  >
+                    {{ ingredient.name }}
+                  </span>
                 </div>
                 <div
                   class="row bottom m-auto"
@@ -221,6 +243,50 @@ export default {
       account: computed(() => AppState.account),
       state,
 
+
+      // NOTE I'm not sure having a new function for each data type is the best solution but I want to get it working first
+      async updateIngredientQuantity(id) {
+        try {
+          let quantity = window.event.target.innerText
+          let data = { quantity: quantity }
+          logger.log(data)
+          await ingredientsService.updateIngredient(data, id)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
+      async updateIngredientName(id) {
+        try {
+          let name = window.event.target.innerText
+          let data = { name: name }
+          logger.log(data)
+          await ingredientsService.updateIngredient(data, id)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
+      async updateStepSequence(id) {
+        try {
+          let sequence = Number(window.event.target.innerText)
+          let data = { sequence: sequence }
+          // logger.log(data)
+          await stepsService.updateStep(data, id)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+      async updateStepBody(id) {
+        try {
+          let body = window.event.target.innerText
+          let data = { body: body }
+          // logger.log(data)
+          await stepsService.updateStep(data, id)
+        } catch (error) {
+          logger.error(error)
+        }
+      },
 
       async addStep(id) {
         state.step.recipeId = id
