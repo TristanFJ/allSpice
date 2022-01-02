@@ -69,12 +69,13 @@ namespace allSpice.Controllers
 
     [HttpPut("{id}")]
     [Authorize]
-    public ActionResult<Step> Create([FromBody] Step updatedStep, int id)
+    public async Task<ActionResult<Step>> CreateAsync([FromBody] Step updatedStep, int id)
     {
       try
       {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         updatedStep.Id = id;
-        Step step = _sts.Update(updatedStep);
+        Step step = _sts.Update(updatedStep, userInfo.Id);
         return Ok(step);
       }
       catch (Exception e)

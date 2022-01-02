@@ -40,9 +40,14 @@ namespace allSpice.Services
       return _repo.Create(newStep);
     }
 
-    internal Step Update(Step updatedStep)
+    internal Step Update(Step updatedStep, string userId)
     {
       Step oldStep = Get(updatedStep.Id);
+      if (oldStep.CreatorId != userId)
+      {
+        throw new Exception("access denied");
+      }
+
       updatedStep.Body = updatedStep.Body != null ? updatedStep.Body : oldStep.Body;
       updatedStep.Sequence = updatedStep.Sequence != 0 ? updatedStep.Sequence : oldStep.Sequence;
       updatedStep.RecipeId = updatedStep.RecipeId != 0 ? updatedStep.RecipeId : oldStep.RecipeId;

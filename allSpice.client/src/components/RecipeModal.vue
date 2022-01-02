@@ -68,14 +68,26 @@
                       v-if="recipe.creatorId === account.id"
                     ></i>
                     <b
-                      class="selectable rounded"
-                      contenteditable
+                      :class="
+                        recipe.creatorId === account.id
+                          ? 'selectable rounded'
+                          : ''
+                      "
+                      :contenteditable="
+                        recipe.creatorId === account.id ? 'true' : 'false'
+                      "
                       @blur="updateStepSequence(step.id)"
                       >{{ step.sequence }}</b
                     >:
                     <span
-                      class="selectable rounded"
-                      contenteditable
+                      :class="
+                        recipe.creatorId === account.id
+                          ? 'selectable rounded'
+                          : ''
+                      "
+                      :contenteditable="
+                        recipe.creatorId === account.id ? 'true' : 'false'
+                      "
                       @blur="updateStepBody(step.id)"
                     >
                       {{ step.body }}
@@ -139,15 +151,27 @@
                   ></i>
 
                   <b
-                    class="selectable rounded"
-                    contenteditable
+                    :class="
+                      recipe.creatorId === account.id
+                        ? 'selectable rounded'
+                        : ''
+                    "
+                    :contenteditable="
+                      recipe.creatorId === account.id ? 'true' : 'false'
+                    "
                     @blur="updateIngredientQuantity(ingredient.id)"
                   >
                     {{ ingredient.quantity }}</b
                   >,
                   <span
-                    class="selectable rounded"
-                    contenteditable
+                    :class="
+                      recipe.creatorId === account.id
+                        ? 'selectable rounded'
+                        : ''
+                    "
+                    :contenteditable="
+                      recipe.creatorId === account.id ? 'true' : 'false'
+                    "
                     @blur="updateIngredientName(ingredient.id)"
                   >
                     {{ ingredient.name }}
@@ -245,6 +269,7 @@ export default {
 
 
       // NOTE I'm not sure having a new function for each data type is the best solution but I want to get it working first
+
       async updateIngredientQuantity(id) {
         try {
           let quantity = window.event.target.innerText
