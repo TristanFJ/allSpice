@@ -26,6 +26,11 @@ namespace allSpice.Services
       return _repo.GetMyRecipes(id);
     }
 
+    internal List<Recipe> GetByCategory(string category)
+    {
+      return _repo.GetByCategory(category);
+    }
+
     internal Recipe Get(int id)
     {
       Recipe found = _repo.Get(id);
@@ -52,6 +57,8 @@ namespace allSpice.Services
       updatedRecipe.ImgUrl = updatedRecipe.ImgUrl != null ? updatedRecipe.ImgUrl : oldRecipe.ImgUrl;
       return _repo.Update(updatedRecipe);
     }
+
+
 
     internal void Remove(int id, string userId)
     {

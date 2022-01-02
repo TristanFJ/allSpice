@@ -49,6 +49,20 @@ namespace allSpice.Controllers
       }
     }
 
+    [HttpGet("category/{category}")]
+    public ActionResult<IEnumerable<Recipe>> GetByCategory(string category)
+    {
+      try
+      {
+        List<Recipe> recipes = _rs.GetByCategory(category);
+        return Ok(recipes);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpGet("{id}")]
     public ActionResult<Recipe> Get(int id)
     {
