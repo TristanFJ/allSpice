@@ -9,20 +9,26 @@
         />
       </div>
       <div class="col-8">
+        <div class="row ms-1">
+          <div class="col-sm-9">
+            <h4 class="card-title" style="text-decoration: underline">
+              {{ recipe.title }}
+            </h4>
+          </div>
+          <div class="col-sm-3">
+            <p class="card-text p-0 text-muted">
+              {{ recipe.category }}
+            </p>
+          </div>
+        </div>
         <div
           class="card-body selectable rounded p-1 m-2"
           data-bs-toggle="modal"
           :data-bs-target="`#recipeModal-${recipe.id}`"
           @click="getById(recipe.id)"
         >
-          <h4 class="card-title" style="text-decoration: underline">
-            {{ recipe.title }}
-          </h4>
           <p class="card-text">
             {{ recipe.subtitle }}
-          </p>
-          <p class="card-text">
-            <small class="text-muted">{{ recipe.category }}</small>
           </p>
         </div>
       </div>

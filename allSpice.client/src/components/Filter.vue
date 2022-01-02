@@ -1,7 +1,7 @@
 <template>
   <div class="filter" v-if="account.id">
     <div class="row">
-      <div class="col-3 p-0">
+      <div class="col-sm-3 p-0">
         <button
           type="button"
           class="btn btn-light m-1 elevation-2"
@@ -10,16 +10,16 @@
           <b>Home</b>
         </button>
       </div>
-      <div class="col-6 p-0">
+      <div class="col-sm-3 p-0">
         <button
           type="button"
           class="btn btn-light m-1 elevation-2"
           @click="myRecipes()"
         >
-          <b>My Recipes</b>
+          <b>Mine</b>
         </button>
       </div>
-      <div class="col-3 p-0">
+      <div class="col-sm-3 p-0">
         <button
           type="button"
           class="btn btn-light m-1 elevation-2"
@@ -28,20 +28,51 @@
           <b>Favorites</b>
         </button>
       </div>
+      <div class="col-sm-3 p-0">
+        <div class="dropdown">
+          <button
+            class="btn btn-light m-1 elevation-2 dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            required
+          >
+            <b>{{ state }}</b>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li v-for="category in categories" :key="category">
+              <div
+                class="dropdown-item selectable"
+                required
+                @click="
+                  state = category;
+                  getByCategory(state);
+                "
+              >
+                {{ category }}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script>
-import { computed } from "@vue/reactivity"
+import { computed, ref } from "@vue/reactivity"
 import { recipesService } from "../services/RecipesService"
 import { logger } from "../utils/Logger"
 import { AppState } from "../AppState"
 export default {
   setup() {
+    const state = ref('Category')
     return {
+      categories: computed(() => AppState.categories),
       account: computed(() => AppState.account),
+      state,
 
 
       async allRecipes() {
@@ -49,7 +80,7 @@ export default {
           // logger.log("Home")
           await recipesService.getAll()
         } catch (error) {
-          logger.log(error)
+          logger.error(error)
         }
       },
 
@@ -57,7 +88,7 @@ export default {
         try {
           await recipesService.getMyRecipes()
         } catch (error) {
-          logger.log(error)
+          logger.error(error)
         }
       },
 
@@ -66,7 +97,15 @@ export default {
           // logger.log("My Favorites")
           await recipesService.getMyFavorites()
         } catch (error) {
-          logger.log(error)
+          logger.error(error)
+        }
+      },
+
+      async getByCategory(state) {
+        try {
+          await recipesService.getByCategory(state)
+        } catch (error) {
+          logger.error(error)
         }
       }
     }

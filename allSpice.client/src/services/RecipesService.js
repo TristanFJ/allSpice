@@ -35,6 +35,12 @@ class RecipesService {
     // logger.log(AppState.recipes)
   }
 
+  async getByCategory(category) {
+    const res = await api.get('api/recipes/category/' + category)
+    // logger.log(res.data)
+    AppState.recipes = res.data
+  }
+
   async favorite(id) {
     const res = await api.post('account/favorites', { "id": id })
     AppState.recipes = AppState.recipes.filter(r => r.id !== id)
