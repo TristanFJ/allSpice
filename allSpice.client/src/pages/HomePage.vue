@@ -30,6 +30,7 @@ export default {
     watchEffect(async () => {
       try {
         await recipesService.getAll()
+        // NOTE GET All favorites and remove duplicates
       } catch (error) {
         logger.log(error)
         Pop.toast(error.message, 'error')

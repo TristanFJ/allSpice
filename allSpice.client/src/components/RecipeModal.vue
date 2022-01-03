@@ -268,7 +268,7 @@ export default {
       state,
 
 
-      // NOTE I'm not sure having a new function for each data type is the best solution but I want to get it working first
+      // NOTE I'm not sure having a new function for each data type is the best solution but I want to get it working first (you could pass property as well as Id)
 
       async updateIngredientQuantity(id) {
         try {
@@ -285,7 +285,7 @@ export default {
         try {
           let name = window.event.target.innerText
           let data = { name: name }
-          logger.log(data)
+          // logger.log(data)
           await ingredientsService.updateIngredient(data, id)
         } catch (error) {
           logger.error(error)
