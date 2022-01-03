@@ -74,7 +74,7 @@
               :src="user.picture"
               alt="user photo"
               height="40"
-              class="rounded"
+              class="rounded-pill"
             />
             <span class="mx-3 text-success lighten-30">{{ user.name }}</span>
           </div>
