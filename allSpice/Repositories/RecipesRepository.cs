@@ -40,6 +40,12 @@ namespace allSpice.Repositories
       return _db.Query<Recipe>(sql, new { category }).ToList();
     }
 
+    internal List<Recipe> GetByTitle(string title)
+    {
+      string sql = "SELECT * FROM recipes WHERE title LIKE @title";
+      return _db.Query<Recipe>(sql, new { title }).ToList();
+    }
+
     internal Recipe Create(Recipe newRecipe)
     {
       string sql = @"

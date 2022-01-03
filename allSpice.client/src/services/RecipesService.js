@@ -16,6 +16,14 @@ class RecipesService {
     AppState.recipes = AppState.recipes.filter(r => r.id !== id)
   }
 
+  async searchRecipes(data) {
+    let search = `%${data}%`
+    // logger.log(search)
+    const res = await api.get('api/recipes/search/' + search)
+    // logger.log(res.data)
+    AppState.recipes = res.data
+  }
+
   async getAll() {
     const res = await api.get('api/recipes')
     AppState.recipes = res.data

@@ -26,6 +26,27 @@
           Share Your Recipe
         </button>
       </ul>
+      <form @submit.prevent="searchRecipes()">
+        <ul class="navbar-nav m-auto my-3">
+          <div class="input-group mx-5">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search Recipes"
+              aria-label="Search Recipes"
+              aria-describedby="button-addon2"
+              v-model="search"
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="submit"
+              id="button-addon2"
+            >
+              <i class="mdi mdi-play"></i>
+            </button>
+          </div>
+        </ul>
+      </form>
       <span class="navbar-text">
         <button
           class="
@@ -88,11 +109,26 @@
 <script>
 import { AuthService } from '../services/AuthService'
 import { AppState } from '../AppState'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { logger } from "../utils/Logger"
+import { recipesService } from "../services/RecipesService"
+import Pop from "../utils/Pop"
 export default {
   setup() {
+    const search = ref('')
     return {
+      search,
       user: computed(() => AppState.user),
+
+      async searchRecipes() {
+        try {
+          await recipesService.searchRecipes(search.value)
+          search.value = ''
+        } catch (error) {
+          logger.error(error)
+        }
+      },
+
       async login() {
         AuthService.loginWithPopup()
       },

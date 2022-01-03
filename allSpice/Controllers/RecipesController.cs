@@ -63,6 +63,22 @@ namespace allSpice.Controllers
       }
     }
 
+    [HttpGet("search/{title}")]
+    public ActionResult<IEnumerable<Recipe>> GetByTitle(string title)
+    {
+      try
+      {
+        List<Recipe> recipes = _rs.GetByTitle(title);
+        return Ok(recipes);
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+
+
     [HttpGet("{id}")]
     public ActionResult<Recipe> Get(int id)
     {
