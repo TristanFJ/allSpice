@@ -263,7 +263,7 @@ export default {
     })
     return {
       ingredients: computed(() => AppState.ingredients),
-      steps: computed(() => AppState.steps),
+      steps: computed(() => AppState.steps.sort((a, b) => { return a.sequence - b.sequence })),
       account: computed(() => AppState.account),
       state,
 
