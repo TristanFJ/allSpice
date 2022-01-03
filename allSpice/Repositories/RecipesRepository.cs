@@ -40,10 +40,10 @@ namespace allSpice.Repositories
       return _db.Query<Recipe>(sql, new { category }).ToList();
     }
 
-    internal List<Recipe> GetByTitle(string title)
+    internal List<Recipe> GetBySearch(string search)
     {
-      string sql = "SELECT * FROM recipes WHERE title LIKE @title";
-      return _db.Query<Recipe>(sql, new { title }).ToList();
+      string sql = "SELECT * FROM recipes WHERE title LIKE @search OR subtitle LIKE @search OR category LIKE @search";
+      return _db.Query<Recipe>(sql, new { search }).ToList();
     }
 
     internal Recipe Create(Recipe newRecipe)
