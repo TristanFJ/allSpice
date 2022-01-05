@@ -59,7 +59,7 @@ class RecipesService {
     const res = await api.post('account/favorites', { "id": id })
     const favorite = AppState.recipes.find(r => r.id === id)
     AppState.favoriteRecipes.push(favorite)
-    // NOTE Hacky workaround to remove the favorited recipe from Home, until they refresh page. Moving on to other important things. 
+
     // logger.log(res.data)
   }
 

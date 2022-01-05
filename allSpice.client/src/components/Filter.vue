@@ -4,8 +4,12 @@
       <div class="col-sm-3 p-0">
         <button
           type="button"
-          class="btn btn-light m-1 elevation-2"
-          @click="allRecipes()"
+          class="btn m-1 elevation-2"
+          :class="select === 1 ? 'btn-secondary' : 'btn-light'"
+          @click="
+            AppState.select = 1;
+            allRecipes();
+          "
         >
           <b>Home</b>
         </button>
@@ -13,8 +17,12 @@
       <div class="col-sm-3 p-0">
         <button
           type="button"
-          class="btn btn-light m-1 elevation-2"
-          @click="myRecipes()"
+          class="btn m-1 elevation-2"
+          :class="select === 2 ? 'btn-secondary' : 'btn-light'"
+          @click="
+            AppState.select = 2;
+            myRecipes();
+          "
         >
           <b>Mine</b>
         </button>
@@ -22,20 +30,25 @@
       <div class="col-sm-3 p-0">
         <button
           type="button"
-          class="btn btn-light m-1 elevation-2"
-          @click="myFavorites()"
+          class="btn m-1 elevation-2"
+          :class="select === 3 ? 'btn-secondary' : 'btn-light'"
+          @click="
+            AppState.select = 3;
+            myFavorites();
+          "
         >
           <b>Favorites</b>
         </button>
       </div>
+
       <div class="col-sm-3 p-0 dropdown">
         <button
-          class="btn btn-light m-1 elevation-2"
+          class="btn m-1 elevation-2"
+          :class="select === 4 ? 'btn-secondary' : 'btn-light'"
           type="button"
           id="dropdownMenuButton1"
           data-bs-toggle="dropdown"
           aria-expanded="false"
-          required
         >
           <b>{{ state }}</b>
         </button>
@@ -70,7 +83,9 @@ export default {
     return {
       categories: computed(() => AppState.categories),
       account: computed(() => AppState.account),
+      select: computed(() => AppState.select),
       state,
+      AppState,
 
 
       async allRecipes() {
@@ -102,6 +117,7 @@ export default {
       async getByCategory(state) {
         try {
           await recipesService.getByCategory(state)
+          AppState.select = 4;
         } catch (error) {
           logger.error(error)
         }

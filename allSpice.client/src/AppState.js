@@ -8,5 +8,6 @@ export const AppState = reactive({
   favoriteRecipes: [],
   ingredients: [],
   steps: [],
-  categories: ["Fish", "Meat", "Sandwich", "Salad", "Soup", "Pizza"]
+  categories: ["Fish", "Meat", "Sandwich", "Salad", "Soup", "Pizza"],
+  select: 0
 })
