@@ -6,7 +6,11 @@
     aria-labelledby="recipe modal"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div
+      class="
+        modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl
+      "
+    >
       <div class="modal-content">
         <div class="modal-header">
           <i
@@ -241,7 +245,7 @@ import Pop from "../utils/Pop"
 import { logger } from "../utils/Logger"
 import { stepsService } from "../services/StepsService"
 import { ingredientsService } from "../services/IngredientsService"
-import { Modal } from "bootstrap"
+
 export default {
   props: { recipe: { type: Object } },
 
