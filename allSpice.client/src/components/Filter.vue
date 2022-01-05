@@ -93,7 +93,7 @@ export default {
       async myFavorites() {
         try {
           // logger.log("My Favorites")
-          await recipesService.getMyFavorites()
+          await recipesService.favoritesButton()
         } catch (error) {
           logger.error(error)
         }

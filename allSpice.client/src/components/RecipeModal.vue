@@ -1,15 +1,4 @@
 <template>
-  <!-- Button trigger modal -->
-  <!-- <button
-    type="button"
-    class="btn btn-primary"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
-  >
-    Launch demo modal
-  </button> -->
-
-  <!-- Modal -->
   <div
     class="modal opacity"
     id="recipeModal"
@@ -18,7 +7,7 @@
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
-      <div class="modal-content modal-xl">
+      <div class="modal-content">
         <div class="modal-header">
           <i
             @click="deleteRecipe(recipe.id)"

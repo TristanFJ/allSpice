@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="row" v-if="account.id">
-      <div class="col-12 text-end p-0 py-2 favorite" v-if="!recipe.favoriteId">
+      <div class="col-12 text-end p-0 py-2 favorite" v-if="!isFavorite">
         <button
           type="button"
           class="btn btn-primary btn-sm rounded-pill elevation-2"
@@ -43,7 +43,7 @@
           Favorite
         </button>
       </div>
-      <div class="col-12 text-end p-0 py-2 favorite" v-else>
+      <div class="col-12 text-end p-0 py-2 favorite" v-if="isFavorite">
         <button
           type="button"
           class="btn btn-secondary btn-sm rounded-pill elevation-2"
@@ -71,10 +71,13 @@ import Pop from "../utils/Pop"
 import { AppState } from "../AppState"
 export default {
   props: { recipe: { type: Object } },
-  setup() {
+  setup(props) {
     return {
-
+      props,
       account: computed(() => AppState.account),
+      isFavorite: computed(() => {
+        return AppState.favoriteRecipes.find(r => r.id === props.recipe.id) ? true : false
+      }),
 
 
       async getById(id) {

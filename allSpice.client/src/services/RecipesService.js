@@ -31,11 +31,17 @@ class RecipesService {
   }
   async getMyFavorites() {
     const res = await api.get('account/favorites')
+    AppState.favoriteRecipes = res.data
+    // logger.log(AppState.recipes)
+  }
+
+  async favoritesButton() {
+    const res = await api.get('account/favorites')
     AppState.recipes = res.data
     // logger.log(AppState.recipes)
   }
 
-  // NOTE to hide the favorite recipes button on favorites, you could maybe getMyFavorites on homePage after getMyRecipes, and then splice in the favorites in place where ever the recipeId matches the favoriteId? Or you could have two arrays in the AppState, one for all and one for FavoriteRecipes, and then you put a function on the recipe.vue that tries to find the recipe in mygroups, and use that to conditionally style the recipe. But then you would need to change the way the filter works with the buttons calling to fill the same array. 
+
 
   async getMyRecipes() {
     const res = await api.get('api/recipes/mine')
@@ -51,14 +57,15 @@ class RecipesService {
 
   async favorite(id) {
     const res = await api.post('account/favorites', { "id": id })
-    AppState.recipes = AppState.recipes.filter(r => r.id !== id)
+    const favorite = AppState.recipes.find(r => r.id === id)
+    AppState.favoriteRecipes.push(favorite)
     // NOTE Hacky workaround to remove the favorited recipe from Home, until they refresh page. Moving on to other important things. 
     // logger.log(res.data)
   }
 
   async unfavorite(id) {
     const res = await api.delete('account/favorites/' + id)
-    AppState.recipes = AppState.recipes.filter(r => r.id !== id)
+    AppState.favoriteRecipes = AppState.favoriteRecipes.filter(r => r.id !== id)
     // logger.log(res.data)
     // logger.log(AppState.recipes)
   }
