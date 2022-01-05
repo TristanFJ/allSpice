@@ -35,7 +35,7 @@ class RecipesService {
     // logger.log(AppState.recipes)
   }
 
-  // NOTE to hide the favorite recipes button on favorites, you could maybe getMyFavorites on homePage after getMyRecipes, and then splice in the favorites in place where ever the recipeId matches the favoriteId?
+  // NOTE to hide the favorite recipes button on favorites, you could maybe getMyFavorites on homePage after getMyRecipes, and then splice in the favorites in place where ever the recipeId matches the favoriteId? Or you could have two arrays in the AppState, one for all and one for FavoriteRecipes, and then you put a function on the recipe.vue that tries to find the recipe in mygroups, and use that to conditionally style the recipe. But then you would need to change the way the filter works with the buttons calling to fill the same array. 
 
   async getMyRecipes() {
     const res = await api.get('api/recipes/mine')
